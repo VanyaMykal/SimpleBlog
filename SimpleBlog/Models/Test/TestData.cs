@@ -13,15 +13,16 @@ namespace SimpleBlog.Models.Test
             User user1 = new User
             {
                 UserName = "Mr_Vanya",
+                Birthday = "18.10.1999",
                 Email = "vanya@ukr.net",
-                Password = "vanya123",
+                PasswordHash = "vanya123",
                 ConfirmPassword = "vanya123"
             };
             User user2 = new User
             {
                 UserName = "Staham",
                 Email = "Staham@ukr.net",
-                Password = "staham123",
+                PasswordHash = "staham123",
                 ConfirmPassword = "staham123"
             };
             if (!context.Users.Any())

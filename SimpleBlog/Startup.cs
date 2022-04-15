@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SimpleBlog.Config;
 using SimpleBlog.Context.Models;
+using SimpleBlog.Repositories;
 
 namespace SimpleBlog
 {
@@ -25,6 +27,9 @@ namespace SimpleBlog
             services.AddCors();
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BlogContext>(options=>options.UseSqlServer(connectionString));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<AuthOptions>();
 
             services.AddControllersWithViews();
             services.AddSession();
@@ -56,6 +61,12 @@ namespace SimpleBlog
             app.UseRouting();
             app.UseSession();
 
+            app.UseCors(options => options
+            .WithOrigins(new[] { "https://localhost:44377" })
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            );
 
             app.UseEndpoints(endpoints =>
             {
