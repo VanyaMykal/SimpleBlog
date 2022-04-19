@@ -1,8 +1,8 @@
 ﻿import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import GoogleLogoutComponent from './GoogleLogoutComponent';
-import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
+import LoginForm from './Authentication/LoginForm';
+import RegisterForm from './Authentication/RegisterForm';
 import MyModal from './UI/MyModal/MyModal';
 
 function Navigation(props) {
@@ -45,6 +45,8 @@ function Navigation(props) {
     }
     else {
         menu = (
+            <div>
+                
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li>
                     <div style={{ border: "solid 1px white", borderRadius: "5px", color: "#88e64e", marginTop: "6px", marginRight: "10px", padding: "3px" }}>{props.userName}</div>
@@ -53,7 +55,8 @@ function Navigation(props) {
                     <Link to="/" className="nav-link active" onClick={logout}>Logout</Link>
                     {/*<GoogleLogoutComponent logoutGmail={logoutGmail}/>*/}
                 </li>
-            </ul>
+                </ul>
+            </div>
         )
     }
 
@@ -61,7 +64,15 @@ function Navigation(props) {
         <div>
             <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
                 <div className="container-fluid">
-                    <Link to="/" className="navbar-brand" href="#" style={{ fontFamily: "cursive" }}>Medium</Link>
+                    <div className="d-flex">
+                        <Link to="/" className="navbar-brand" href="#" style={{ fontFamily: "cursive" }}>Medium</Link>
+                        {props.userName === undefined
+                        ?
+                        <Link to="/" className="navbar-brand" href="#" style={{ fontFamily: "cursive" }}>Add new article</Link>
+                        :
+                        <Link to="/create" className="navbar-brand" href="#" style={{ fontFamily: "cursive" }}>Add new article</Link>
+                        }
+                    </div>
                     <div>
                         {menu}
                     </div>
