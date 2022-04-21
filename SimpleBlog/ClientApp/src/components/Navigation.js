@@ -62,15 +62,15 @@ function Navigation(props) {
 
     return (
         <div>
-            <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                 <div className="container-fluid">
                     <div className="d-flex">
-                        <Link to="/" className="navbar-brand" href="#" style={{ fontFamily: "cursive" }}>Medium</Link>
+                        <Link to="/" className="navbar-brand"  style={{ fontFamily: "cursive" }}>Medium</Link>
                         {props.userName === undefined
                         ?
-                        <Link to="/" className="navbar-brand" href="#" style={{ fontFamily: "cursive" }}>Add new article</Link>
+                        <Link to="/" className="navbar-brand"  style={{ fontFamily: "cursive" }}>Add new article</Link>
                         :
-                        <Link to="/create" className="navbar-brand" href="#" style={{ fontFamily: "cursive" }}>Add new article</Link>
+                        <Link to="/create" className="navbar-brand"  style={{ fontFamily: "cursive" }}>Add new article</Link>
                         }
                     </div>
                     <div>

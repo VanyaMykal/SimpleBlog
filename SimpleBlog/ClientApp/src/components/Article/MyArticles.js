@@ -14,9 +14,23 @@ function MyArticles() {
         }
         getArticle();
     }, []);
+
+    async function removeArticle(articleId) {
+        let article = setMyArticles(myArticles.filter(a => a.articleId !== articleId))
+        await fetch(`https://localhost:44377/api/article/delete/` + articleId, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        })
+    
+    }
+    if (!myArticles.length) {
+        return (
+            <h1 className="text-center">Empty list</h1>
+        )
+    }
     return (
         <div>
-            <ArticlesList articles={myArticles} />
+            <ArticlesList articles={myArticles} remove={removeArticle} />
         </div>
         )
 }

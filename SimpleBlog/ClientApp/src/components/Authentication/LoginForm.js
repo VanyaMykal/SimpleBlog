@@ -73,6 +73,8 @@ function LoginForm(props) {
         console.log(data)
         if (data.message === "Invalid email" || data.message === "Invalid password") {
             setEmailError("Incorrect login or password");
+            setEmail('')
+            setPassword('')
             setRedirect(false);
         }
         else {

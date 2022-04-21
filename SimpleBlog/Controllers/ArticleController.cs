@@ -79,5 +79,20 @@ namespace SimpleBlog.Controllers
             await context.SaveChangesAsync();
             return Ok(curentArticle);
         }
+        [HttpPut]
+        public async Task<ActionResult<IEnumerable<Article>>> Edit(Article article)
+        {
+            if (article == null)
+            {
+                return BadRequest();
+            }
+            if (!context.Articles.Any(x=>x.ArticleId==article.ArticleId))
+            {
+                return NotFound();
+            }
+            context.Articles.Update(article);
+            await context.SaveChangesAsync();
+            return Ok(article);
+        }
     }
 }

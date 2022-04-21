@@ -1,10 +1,11 @@
-﻿import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+﻿import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-function AddArticleForm({ create }) {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
+function EditArticleForm({ data, edit }) {
+    console.log(data.articleId)
+    const [title, setTitle] = useState(data.title);
+    const [description, setDescription] = useState(data.description);
+    const [image, setImage] = useState(data.image);
 
     const [titleEmpty, setTitleEmpty] = useState(false);
     const [descriptionEmpty, setDescriptionEmpty] = useState(false);
@@ -97,18 +98,19 @@ function AddArticleForm({ create }) {
         }
     }
 
-    async function createArticle() {
+    async function editArticle() {
         let newArticle = {
+            articleId: data.articleId,
             title: title,
             description: description,
             image: image
         }
-        let response = await fetch("https://localhost:44377/api/article/create", {
-            method: "POST",
+        let response = await fetch("https://localhost:44377/api/article/edit/", {
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newArticle)
         })
-        /*create(newArticle)*/
+        edit(newArticle)
     }
     return (
         <main className="form-signin">
@@ -128,7 +130,7 @@ function AddArticleForm({ create }) {
                         <input type="file" className="form-control mb-2" onBlur={e => blurHandler(e)} name="avatar" onChange={handleFileInputChange} />
                     </div>
                     <Link to="/">
-                        <button className="w-100 btn btn-lg btn-primary" disabled={!formValid} onClick={createArticle} type="submit">Save</button>
+                        <button className="w-100 btn btn-lg btn-primary" disabled={!formValid} onClick={editArticle} type="submit">Save</button>
                     </Link>
                 </form>
             </div>
@@ -136,4 +138,4 @@ function AddArticleForm({ create }) {
         )
 }
 
-export default AddArticleForm;
+export default EditArticleForm

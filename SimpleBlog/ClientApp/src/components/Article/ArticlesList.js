@@ -1,10 +1,12 @@
 ﻿import ArticleItem from "./ArticleItem"
 
-function ArticlesList({ articles }) {
+function ArticlesList({ articles, remove}) {
     return (
         <div>
             {articles.map((article, index) =>
-                <ArticleItem key={index} article={article} number={index+1}/>
+                <div key={index}>
+                    <ArticleItem article={article} number={index + 1} remove={remove}/>
+                </div>
                 )}
         </div>
         )
