@@ -57,7 +57,7 @@ function Home(props) {
                     : <div>
                         {!filteredArticle.length
                             ? <h1 className="text-center">Not found</h1>
-                            : <ArticlesList articles={filteredArticle} />
+                            : <ArticlesList articles={filteredArticle} userName={props.userName} setName={props.setName} getId={props.getId}/>
                         }</div>
                 }
             </div>

@@ -5,6 +5,8 @@ import MyModal from '../UI/MyModal/MyModal';
 import { Link } from 'react-router-dom';
 import GoogleLoginComponent from '../GoogleLoginComponent';
 function RegisterForm(props) {
+    const [modalLogin, setModalLogin] = useState(false)
+
     const [name, setName] = useState('');
     const [birthday, setBirthday] = useState('');
     const [email, setEmail] = useState('');
@@ -38,9 +40,9 @@ function RegisterForm(props) {
         }
     }, [nameError, birthdayError, emailError, passwordError, confirmPasswordError])
 
-    function submit(e) {
-        e.preventDefault();
-    }
+    //function submit(e) {
+    //    e.preventDefault();
+    //}
 
 
     function userName(event) {
@@ -174,7 +176,7 @@ function RegisterForm(props) {
     return (
         <main className="form-signin">
             <div>
-                <form onSubmit={submit}>
+                <form>
                     <h1 className="h3 mb-3 fw-normal" style={{ fontFamily: "sans-serif", textAlign: "center" }}>Join Medium</h1>
                     {(nameEmpty && nameError) && <div style={{ color: "red" }}>{nameError}</div>}
                     <div>
@@ -200,15 +202,16 @@ function RegisterForm(props) {
                     <div>
                         <input type="password" onBlur={e => blurHandler(e)} className="form-control mb-2" value={confirmPassword} name="confirmPassword" onChange={userConfirmPassword} placeholder="Confirm password" />
                     </div>
-
-
                     <button className="w-100 btn btn-lg btn-primary" disabled={!formValid} onClick={createUser} type="submit">Sign up</button>
-                    {/*<div class="mt-3 text-center">Already have an account?*/}
-                    {/*    <Link to="/login" class="nav-link active link-success">*/}
-                    {/*        <button type="button" class="btn btn-success">Sign in</button>*/}
-                    {/*    </Link>*/}
-                    {/*</div>*/}
+                    
                 </form>
+                <hr></hr>
+                <div className="mt-3 text-center">Already have an account?
+                    <div><button type="button" className="btn btn-success mt-2" onClick={() => [setModalLogin(true)]}>Sign in</button></div>
+                    <MyModal visible={modalLogin} setVisible={setModalLogin}>
+                        <LoginForm setName={props.setName} />
+                    </MyModal>
+                </div>
             </div>
         </main>
     );

@@ -53,18 +53,21 @@ namespace SimpleBlog.Models.Test
             Comment comment1 = new Comment
             {
                 Text = "comment 1",
+                DateTime = "14.04.2022",
                 User = user1,
                 Article = article1
             };
             Comment comment2 = new Comment
             {
                 Text = "comment 2",
+                DateTime = "14.04.2022",
                 User = user1,
                 Article = article1
             };
             Comment comment3 = new Comment
             {
                 Text = "comment 3",
+                DateTime = "14.04.2022",
                 User = user2,
                 Article = article2
             };

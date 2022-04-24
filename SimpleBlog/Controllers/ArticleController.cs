@@ -29,6 +29,17 @@ namespace SimpleBlog.Controllers
         {
             return await context.Articles.ToListAsync();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<Article>>> GetArticle(int id)
+        {
+            var article = await context.Articles.FirstOrDefaultAsync(x=>x.ArticleId == id);
+            if (article==null)
+            {
+                return NotFound();
+            }
+            return Ok(article);
+        }
         [HttpPost]
         public async Task<ActionResult<IEnumerable<Article>>> Create(Article article)
         {

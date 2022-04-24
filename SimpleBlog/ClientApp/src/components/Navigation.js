@@ -31,7 +31,7 @@ function Navigation(props) {
                 <li>
                     <button type="button" className="btn btn-outline-light me-2" onClick={() => setModalLogin(true)}>Login</button>
                     <MyModal visible={modalLogin} setVisible={setModalLogin}>
-                        <LoginForm setName={props.setName}/>
+                        <LoginForm setName={props.setName} />
                     </MyModal>
                 </li>
                 <li>
@@ -53,7 +53,6 @@ function Navigation(props) {
                 </li>
                 <li className="nav-item">
                     <Link to="/" className="nav-link active" onClick={logout}>Logout</Link>
-                    {/*<GoogleLogoutComponent logoutGmail={logoutGmail}/>*/}
                 </li>
                 </ul>
             </div>
