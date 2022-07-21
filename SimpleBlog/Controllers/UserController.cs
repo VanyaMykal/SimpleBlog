@@ -39,6 +39,7 @@ namespace SimpleBlog.Controllers
                 UserName = model.UserName,
                 Email = model.Email,
                 Birthday = model.Birthday,
+                Photo = model.Photo,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 ConfirmPassword = BCrypt.Net.BCrypt.HashPassword(model.ConfirmPassword)
             };

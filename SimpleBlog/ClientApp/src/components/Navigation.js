@@ -4,6 +4,8 @@ import GoogleLogoutComponent from './GoogleLogoutComponent';
 import LoginForm from './Authentication/LoginForm';
 import RegisterForm from './Authentication/RegisterForm';
 import MyModal from './UI/MyModal/MyModal';
+import { Dropdown } from 'react-bootstrap';
+import defaultImage from "../images/default.png";
 
 function Navigation(props) {
     const [modalRegister, setModalRegister] = useState(false)
@@ -22,7 +24,6 @@ function Navigation(props) {
     function logoutGmail(logoutUser) {
         props.setName(logoutUser)
     }
-
     let menu;
 
     if (props.userName === undefined) {
@@ -37,7 +38,7 @@ function Navigation(props) {
                 <li>
                     <button type="button" className="btn btn-warning" onClick={() => setModalRegister(true)}>Sign-up</button>
                     <MyModal visible={modalRegister} setVisible={setModalRegister}>
-                        <RegisterForm setName={props.setName} setModal={setModalRegister}/>
+                        <RegisterForm setName={props.setName}/>
                     </MyModal>
                 </li>
             </ul>
@@ -46,11 +47,17 @@ function Navigation(props) {
     else {
         menu = (
             <div>
-                
-            <ul className="navbar-nav me-auto mb-2 mb-md-0">
-                <li>
-                    <div style={{ border: "solid 1px white", borderRadius: "5px", color: "#88e64e", marginTop: "6px", marginRight: "10px", padding: "3px" }}>{props.userName}</div>
-                </li>
+                <ul className="navbar-nav me-auto mb-2 mb-md-0">
+                    <li>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                {props.userName}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </li>
                 <li className="nav-item">
                     <Link to="/" className="nav-link active" onClick={logout}>Logout</Link>
                 </li>
@@ -67,7 +74,12 @@ function Navigation(props) {
                         <Link to="/" className="navbar-brand"  style={{ fontFamily: "cursive" }}>Medium</Link>
                         {props.userName === undefined
                         ?
-                        <Link to="/" className="navbar-brand"  style={{ fontFamily: "cursive" }}>Add new article</Link>
+                            <div>
+                                <div><Link to="/" style={{ fontFamily: "cursive" }} className="navbar-brand" onClick={() => setModalRegister(true)}>Add new article</Link></div>
+                                <MyModal visible={modalRegister} setVisible={setModalRegister}>
+                                    <RegisterForm setName={props.setName} setModal={setModalRegister} />
+                                </MyModal>
+                            </div>
                         :
                         <Link to="/create" className="navbar-brand"  style={{ fontFamily: "cursive" }}>Add new article</Link>
                         }

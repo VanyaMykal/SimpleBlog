@@ -3,11 +3,12 @@ import { Link } from "react-router-dom"
 import LoginForm from "../Authentication/LoginForm"
 import RegisterForm from "../Authentication/RegisterForm"
 import MyModal from "../UI/MyModal/MyModal"
+import ConfirmingRemovingArticle from "./ConfirmRemovingArticle"
 import EditArticleForm from "./EditArticleForm"
-
 function ArticleItem(props) {
     const [modal, setModal] = useState(false)
     const [modalRegister, setModalRegister] = useState(false)
+    const [modalConfirm, setModalConfirm] = useState(false)
     console.log("Auth user " + props.userName)
     function editPost(newPost) {
         console.log("newPost " + newPost.title)
@@ -16,7 +17,6 @@ function ArticleItem(props) {
         props.article.image = newPost.image
         setModal(false)
     }
-
     return (
         <div>
             {!props.article.userName
@@ -58,7 +58,10 @@ function ArticleItem(props) {
                                     <MyModal visible={modal} setVisible={setModal}>
                                         <EditArticleForm data={props.article} edit={editPost} />
                                     </MyModal>
-                                    <button className="btn btn-danger" id={`${props.article.articleId}`} onClick={() => props.remove(props.article.articleId)}>Delete</button>
+                                    <button className="btn btn-danger" id={`${props.article.articleId}`} onClick={() => setModalConfirm(true)}>Delete</button>
+                                    <MyModal visible={modalConfirm} setVisible={setModalConfirm}>
+                                        <ConfirmingRemovingArticle data={props.article} remove={props.remove} cancel={setModalConfirm} />
+                                    </MyModal>
                                 </div>
                             </div>
                         </div>

@@ -21,6 +21,7 @@ function Home(props) {
         return article.title.toLowerCase().includes(value.toLowerCase())
     })
     let auth;
+    console.log(props.userName)
     if (props.userName === undefined) {
         auth = (
             <div>

@@ -3,6 +3,7 @@ import AddCommentForm from "./AddCommentForm";
 import { Redirect } from "react-router-dom";
 import ArticleInCommentPage from "./ArticleInCommentPage";
 import GetComments from "./GetComments";
+import Loader from "../UI/loader/Loader";
 
 function CommentPage(props) {
     const [article, setArticle] = useState("")
@@ -43,6 +44,7 @@ function CommentPage(props) {
         getComments()
     }, [])
     console.log(comments)
+    console.log(article.length)
     function createComment(newComment) {
         setComments([...comments, newComment])
     }
@@ -51,7 +53,10 @@ function CommentPage(props) {
     }
     return (
         <div>
-            <ArticleInCommentPage article={article} />
+            
+                 {/*<div className="d-flex justify-content-center"><Loader /></div>*/}
+                 <ArticleInCommentPage article={article} />
+            
             <AddCommentForm createComment={createComment} article={article} />
             <GetComments comments={comments} />
         </div>

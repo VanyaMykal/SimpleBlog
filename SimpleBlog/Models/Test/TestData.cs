@@ -30,7 +30,7 @@ namespace SimpleBlog.Models.Test
                 context.Users.Add(user1);
                 context.Users.Add(user2);
                 context.SaveChanges();
-            }        
+            }
 
             Article article1 = new Article
             {

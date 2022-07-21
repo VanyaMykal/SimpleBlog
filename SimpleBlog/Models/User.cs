@@ -14,6 +14,7 @@ namespace SimpleBlog.Models
             Comments = new List<Comment>();
         }
         public string Birthday { get; set; }
+        public string Photo { get; set; }
         public string ConfirmPassword { get; set; }
         public List<Article> Articles { get; set; }
         public List<Comment> Comments { get; set; }

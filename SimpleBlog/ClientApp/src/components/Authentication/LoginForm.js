@@ -81,7 +81,6 @@ function LoginForm(props) {
             setRedirect(true);
             props.setName(data.name);
             sessionStorage.setItem("access_token", data.access_token)
-            console.log(data);
         }   
     }
     if (redirect) {

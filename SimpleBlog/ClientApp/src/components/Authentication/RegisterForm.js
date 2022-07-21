@@ -2,48 +2,43 @@
 import { Redirect } from "react-router-dom";
 import LoginForm from './LoginForm';
 import MyModal from '../UI/MyModal/MyModal';
-import { Link } from 'react-router-dom';
-import GoogleLoginComponent from '../GoogleLoginComponent';
 function RegisterForm(props) {
     const [modalLogin, setModalLogin] = useState(false)
 
     const [name, setName] = useState('');
     const [birthday, setBirthday] = useState('');
     const [email, setEmail] = useState('');
+    const [photo, setPhoto] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
 
-
     const [nameEmpty, setNameEmpty] = useState(false);
     const [birthdayEmpty, setBirthdayEmpty] = useState(false);
     const [emailEmpty, setEmailEmpty] = useState(false);
+    const [photoEmpty, setPhotoEmpty] = useState(false);
     const [passwordEmpty, setPasswordEmpty] = useState(false);
     const [confirmPasswordEmpty, setConfirmPasswordEmpty] = useState(false);
 
     const [nameError, setNameError] = useState('Input your name');
     const [birthdayError, setBirthdayError] = useState('Input your birthday');
     const [emailError, setEmailError] = useState('Input your email');
+    const [photoError, setPhotoError] = useState('Photo required');
     const [passwordError, setPasswordError] = useState('Input your password');
     const [confirmPasswordError, setConfirmPasswordError] = useState('Please confirm your password');
 
     const [passwordStrengthColor, setPasswordStrengthColor] = useState("#ffffff");
 
-    const [formValid, setFormValid] = useState(false)
+    const [formValid, setFormValid] = useState(false)   
     useEffect(() => {
 
-        if (nameError || birthdayError || emailError || passwordError || confirmPasswordError) {
+        if (nameError || birthdayError || emailError || passwordError || confirmPasswordError || photoError) {
             setFormValid(false);
         }
         else {
             setFormValid(true);
         }
-    }, [nameError, birthdayError, emailError, passwordError, confirmPasswordError])
-
-    //function submit(e) {
-    //    e.preventDefault();
-    //}
-
+    }, [nameError, birthdayError, emailError, passwordError, confirmPasswordError, photoError])
 
     function userName(event) {
         setName(event.target.value);
@@ -112,6 +107,41 @@ function RegisterForm(props) {
         }
     }
 
+    let baseURL;
+    function getBase64(file) {
+        return new Promise(resolve => {
+            baseURL = "";
+            let reader = new FileReader();
+
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                console.log("Called", reader);
+                baseURL = reader.result;
+                console.log("Base 64", reader.result);
+                setPhoto(reader.result);
+                if (reader.result === '') {
+                    setPhotoError('Photo required');
+                }
+                else {
+                    setPhotoError('');
+                }
+                resolve(baseURL);
+            }
+        })
+    }
+    function handleFileInputChange(e) {
+        console.log(e.target.files[0]);
+        let file = e.target.files[0];
+        getBase64(file)
+            .then(result => {
+                file["base64"] = result;
+                console.log("File Is", file);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
     const blurHandler = (event) => {
         switch (event.target.name) {
             case 'email':
@@ -122,6 +152,9 @@ function RegisterForm(props) {
                 break;
             case 'password':
                 setPasswordEmpty(true);
+                break;
+            case 'photo':
+                setPhotoEmpty(true)
                 break;
             case 'birthday':
                 setBirthdayEmpty(true);
@@ -136,6 +169,7 @@ function RegisterForm(props) {
         let newUser = {
             username: name,
             birthday: birthday,
+            photo:photo,
             email: email,
             Password: password,
             confirmPassword: confirmPassword
@@ -160,14 +194,10 @@ function RegisterForm(props) {
         }
         else {
             setRedirect(true);
+            sessionStorage.setItem("access_token", data.access_token)
             props.setName(data.user.userName);
-            console.log(data);
         }
     }
-    function newUser(userGmail) {
-        props.setName(userGmail)
-    }
-
     const stylePasswordField = { backgroundColor: passwordStrengthColor };
 
     if (redirect) {
@@ -186,6 +216,12 @@ function RegisterForm(props) {
                     {(birthdayEmpty && birthdayError) && <div style={{ color: "red" }}>{birthdayError}</div>}
                     <div>
                         <input className="form-control mb-2" value={birthday} onBlur={e => blurHandler(e)} type="text" name="birthday" onChange={userBirthday} placeholder="DD-MM-YYYY" />
+                    </div>
+
+                    <label>Profile picture</label>
+                    {(photoEmpty && photoError) && <div style={{ color: "red" }}>{photoError}</div>}
+                    <div>
+                        <input className="form-control mb-2" type="file" name="photo" onChange={handleFileInputChange} />
                     </div>
 
                     {(emailEmpty && emailError) && <div style={{ color: "red" }}>{emailError}</div>}
@@ -207,7 +243,7 @@ function RegisterForm(props) {
                 </form>
                 <hr></hr>
                 <div className="mt-3 text-center">Already have an account?
-                    <div><button type="button" className="btn btn-success mt-2" onClick={() => [setModalLogin(true)]}>Sign in</button></div>
+                    <div><button type="button" className="btn btn-success mt-2" onClick={() => setModalLogin(true)}>Sign in</button></div>
                     <MyModal visible={modalLogin} setVisible={setModalLogin}>
                         <LoginForm setName={props.setName} />
                     </MyModal>

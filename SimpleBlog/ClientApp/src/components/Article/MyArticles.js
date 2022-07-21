@@ -1,7 +1,6 @@
 ﻿import { useEffect, useState } from "react";
 import ArticlesList from "./ArticlesList";
-
-function MyArticles() {
+function MyArticles(props) {
     const [myArticles, setMyArticles] = useState([])
     useEffect(() => {
         async function getArticle() {
